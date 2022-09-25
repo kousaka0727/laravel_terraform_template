@@ -64,11 +64,11 @@ data "template_file" "container_definitions" {
     name   = "${var.pj_name}-${var.env}"
 
     db_host     = aws_rds_cluster.main.endpoint
-    db_username = "poc_user"
-    db_password = "poc_pass"
-    db_database = "poc_db"
+    db_database = var.mysql_db_name
+    db_username = var.mysql_user_name
 
-    app_key = "base64:hE9iPSnk+ytfZKAXhn/vVhj0+Vo1aPIduk7yghHCwEI="
+    db_pass_ssm = "/${var.pj_name}/${var.env}/mysql_password"
+    app_key_ssm = "/${var.pj_name}/${var.env}/app_key"
   }
 }
 

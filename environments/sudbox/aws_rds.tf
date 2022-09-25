@@ -19,9 +19,9 @@ resource "aws_rds_cluster" "main" {
   engine = "aurora-mysql"
   port   = "3306"
 
-  database_name   = "poc_db"
-  master_username = "poc_user"
-  master_password = "poc_pass"
+  database_name   = var.mysql_db_name
+  master_username = var.mysql_user_name
+  master_password = var.mysql_password
 }
 
 resource "aws_rds_cluster_instance" "main" {
