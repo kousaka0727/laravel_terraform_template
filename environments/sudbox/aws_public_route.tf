@@ -12,12 +12,9 @@ resource "aws_route" "public" {
   gateway_id             = aws_internet_gateway.main.id
 }
 
-resource "aws_route_table_association" "public_1a" {
-  subnet_id      = aws_subnet.public_1a.id
-  route_table_id = aws_route_table.public.id
-}
+resource "aws_route_table_association" "publics" {
+  for_each = var.availability_zones
 
-resource "aws_route_table_association" "public_1c" {
-  subnet_id      = aws_subnet.public_1c.id
+  subnet_id = aws_subnet.publics[each.key].id
   route_table_id = aws_route_table.public.id
 }

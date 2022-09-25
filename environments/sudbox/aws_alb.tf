@@ -3,7 +3,10 @@ resource "aws_lb" "main" {
   name               = "${var.pj_name}-${var.env}-alb"
 
   security_groups = [aws_security_group.alb.id]
-  subnets         = [aws_subnet.public_1a.id, aws_subnet.public_1c.id]
+  subnets         = [
+      for subnet in aws_subnet.publics :
+      subnet.id
+  ]
 }
 
 resource "aws_lb_listener" "http" {

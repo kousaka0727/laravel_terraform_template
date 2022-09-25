@@ -1,49 +1,23 @@
-resource "aws_subnet" "public_1a" {
-  vpc_id = aws_vpc.main.id
+resource "aws_subnet" "publics" {
+  for_each = var.availability_zones
 
-  availability_zone = "ap-northeast-1a"
-
-  cidr_block = "10.0.1.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = cidrsubnet(aws_vpc.main.cidr_block, 4, each.value)
+  availability_zone = each.key
 
   tags = {
-    Name = "${var.pj_name}-${var.env}-public-1a"
+    Name = "${var.pj_name}-${var.env}-public-${each.key}"
   }
 }
 
-resource "aws_subnet" "public_1c" {
-  vpc_id = aws_vpc.main.id
+resource "aws_subnet" "privates" {
+  for_each = var.availability_zones
 
-  availability_zone = "ap-northeast-1c"
-
-  cidr_block = "10.0.2.0/24"
-
-  tags = {
-    Name = "${var.pj_name}-${var.env}-public-1c"
-  }
-}
-
-
-
-resource "aws_subnet" "private_1a" {
-  vpc_id = aws_vpc.main.id
-
-  availability_zone = "ap-northeast-1a"
-
-  cidr_block = "10.0.10.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = cidrsubnet(aws_vpc.main.cidr_block, 4, each.value + 3)
+  availability_zone = each.key
 
   tags = {
-    Name = "${var.pj_name}-${var.env}-private-1a"
-  }
-}
-
-resource "aws_subnet" "private_1c" {
-  vpc_id = aws_vpc.main.id
-
-  availability_zone = "ap-northeast-1c"
-
-  cidr_block = "10.0.20.0/24"
-
-  tags = {
-    Name = "${var.pj_name}-${var.env}-private-1c"
+    Name = "${var.pj_name}-${var.env}-private-${each.key}"
   }
 }

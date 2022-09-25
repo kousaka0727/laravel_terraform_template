@@ -14,7 +14,11 @@ resource "aws_ecs_service" "main" {
   # ECSタスクへ設定するネットワークの設定
   network_configuration {
     # タスクの起動を許可するサブネット
-    subnets = [aws_subnet.private_1a.id, aws_subnet.private_1c.id]
+    subnets = [
+      for subnet in aws_subnet.privates :
+      subnet.id
+    ]
+    
     # タスクに紐付けるセキュリティグループ
     security_groups = [aws_security_group.ecs.id]
   }
