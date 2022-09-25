@@ -18,7 +18,7 @@ resource "aws_ecs_service" "main" {
       for subnet in aws_subnet.privates :
       subnet.id
     ]
-    
+
     # タスクに紐付けるセキュリティグループ
     security_groups = [aws_security_group.ecs.id]
   }

@@ -1,7 +1,7 @@
 resource "aws_db_subnet_group" "main" {
   name        = "${var.pj_name}-${var.env}"
   description = "${var.pj_name}-${var.env}"
-  subnet_ids  = [
+  subnet_ids = [
     for subnet in aws_subnet.privates :
     subnet.id
   ]

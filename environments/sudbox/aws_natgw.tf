@@ -15,7 +15,7 @@ resource "aws_eip" "eips" {
 resource "aws_nat_gateway" "natgws" {
   for_each = var.availability_zones
 
-  subnet_id = aws_subnet.publics[each.key].id
+  subnet_id     = aws_subnet.publics[each.key].id
   allocation_id = aws_eip.eips[each.key].id
 
   depends_on = [

@@ -3,9 +3,9 @@ resource "aws_lb" "main" {
   name               = "${var.pj_name}-${var.env}-alb"
 
   security_groups = [aws_security_group.alb.id]
-  subnets         = [
-      for subnet in aws_subnet.publics :
-      subnet.id
+  subnets = [
+    for subnet in aws_subnet.publics :
+    subnet.id
   ]
 }
 
