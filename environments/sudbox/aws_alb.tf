@@ -20,36 +20,14 @@ resource "aws_lb_listener" "http" {
 
     fixed_response {
       content_type = "text/plain"
-      status_code  = "200"
-      message_body = "ok"
-    }
-  }
-}
-
-resource "aws_lb_listener_rule" "main" {
-  # ルールを追加するリスナー
-  listener_arn = aws_lb_listener.http.arn
-
-  priority = 100
-
-  # 受け取ったトラフィックをターゲットグループへ受け渡す
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.main.id
-  }
-
-  # ターゲットグループへ受け渡すトラフィックの条件
-  condition {
-    path_pattern {
-      values = ["/*"]
+      status_code  = "404"
+      message_body = "<html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><hr><address>Apache/2.2.31</address></body></html>"
     }
   }
 }
 
 resource "aws_lb_listener_rule" "http_to_https" {
   listener_arn = aws_lb_listener.http.arn
-
-  priority = 99
 
   action {
     type = "redirect"
