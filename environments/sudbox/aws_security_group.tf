@@ -1,6 +1,6 @@
 resource "aws_security_group" "alb" {
   name        = "${var.pj_name}-${var.env}-alb"
-  description = "${var.pj_name} ${var.env} alb"
+  description = "security group for ${var.pj_name}-${var.env} alb"
   vpc_id      = aws_vpc.main.id
 
   egress {
@@ -43,7 +43,7 @@ resource "aws_security_group_rule" "alb_https" {
 
 resource "aws_security_group" "ecs" {
   name        = "${var.pj_name}-${var.env}-ecs"
-  description = "${var.pj_name} ${var.env} ecs"
+  description = "security group for ${var.pj_name}-${var.env} ecs"
   vpc_id      = aws_vpc.main.id
 
   ingress {
@@ -83,7 +83,7 @@ resource "aws_security_group" "ecs" {
 #  ==================================================== RDS ====================================================
 resource "aws_security_group" "rds" {
   name        = "${var.pj_name}-${var.env}-rds"
-  description = "${var.pj_name} ${var.env} rds"
+  description = "security group for ${var.pj_name}-${var.env} rds"
 
   vpc_id = aws_vpc.main.id
 
@@ -103,5 +103,30 @@ resource "aws_security_group" "rds" {
 
   tags = {
     Name = "${var.pj_name}-${var.env}-rds"
+  }
+}
+
+#  ==================================================== Redis ====================================================
+resource "aws_security_group" "redis" {
+  name        = "${var.pj_name}-${var.env}-redis"
+  description = "security group for ${var.pj_name}-${var.env} redis"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port   = 6379
+    to_port     = 6379
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.pj_name}-${var.env}-redis"
   }
 }

@@ -67,6 +67,8 @@ data "template_file" "container_definitions" {
     db_database = var.mysql_db_name
     db_username = var.mysql_user_name
 
+    redis_host = aws_elasticache_cluster.main.cache_nodes.0.address
+
     db_pass_ssm = "/${var.pj_name}/${var.env}/mysql_password"
     app_key_ssm = "/${var.pj_name}/${var.env}/app_key"
   }
