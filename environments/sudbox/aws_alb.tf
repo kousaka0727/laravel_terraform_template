@@ -49,6 +49,7 @@ resource "aws_lb_listener_rule" "http_to_https" {
 resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.main.arn
   certificate_arn   = aws_acm_certificate.main.arn
+  ssl_policy        = "ELBSecurityPolicy-FS-1-2-Res-2020-10"
 
   port     = 443
   protocol = "HTTPS"

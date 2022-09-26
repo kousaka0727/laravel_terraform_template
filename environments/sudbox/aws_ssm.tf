@@ -14,7 +14,7 @@ resource "aws_ssm_parameter" "mysql_password" {
 
 resource "aws_ssm_parameter" "app_key" {
   name        = "/${var.pj_name}/${var.env}/app_key"
-  value       = var.mysql_password
+  value       = var.app_key
   description = "Appkey used in laravel"
 
   type   = "SecureString"
