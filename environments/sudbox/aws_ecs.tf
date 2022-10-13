@@ -58,16 +58,19 @@ data "template_file" "container_definitions" {
   vars = {
     tag = "latest"
 
-    # account_id = data.account_id
-    # region     = data.aws_region.current.name
-    region = "ap-northeast-1"
-    name   = "${var.pj_name}-${var.env}"
+    account_id = data.aws_caller_identity.current.account_id
+    region     = var.region
+    pj_name    = var.pj_name
+    name       = "${var.pj_name}-${var.env}"
 
     db_host     = aws_rds_cluster.main.endpoint
     db_database = var.mysql_db_name
     db_username = var.mysql_user_name
 
     redis_host = aws_elasticache_cluster.main.cache_nodes.0.address
+
+    nginx_log_group = aws_cloudwatch_log_group.nginx.name
+    app_log_group = aws_cloudwatch_log_group.app.name
 
     db_pass_ssm = "/${var.pj_name}/${var.env}/mysql_password"
     app_key_ssm = "/${var.pj_name}/${var.env}/app_key"

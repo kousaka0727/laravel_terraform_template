@@ -22,7 +22,7 @@
   },
   {
     "name": "app",
-    "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/${pj_name}/app:${tag}", 
+    "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/${pj_name}/php:${tag}", 
     "cpu": 0,
     "memory": 128,
     "logConfiguration": {
